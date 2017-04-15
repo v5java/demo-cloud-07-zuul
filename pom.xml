@@ -9,7 +9,7 @@
     <modules>
         <module>service-client</module>
         <module>service-discovery</module>
-		<module>service-gateway-01</module>
+        <module>service-gateway-01</module>
         <module>service-gateway-02</module>
         <module>service-server-01</module>
         <module>service-server-02</module>
