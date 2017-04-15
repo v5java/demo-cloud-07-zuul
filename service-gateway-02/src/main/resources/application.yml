@@ -1,5 +1,5 @@
 server:
-  port: 5200
+  port: 4200
 
 spring:
   application:
@@ -12,11 +12,19 @@ zuul:
       url: http://127.0.0.1:2100/
     api-add:
       path: /caladd/**
-      serviceId: xuanyu-prop
-    xuanyu-prop:
-      path: /call/**
+      serviceId: CalculatorServer
+    CalculatorServer:
+      path: /mycall/**
+      #serviceId: CalculatorServer
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
   client:
+    healthcheck:
+      enabled: true
     serviceUrl:
       defaultZone: http://127.0.0.1:1100/eureka/

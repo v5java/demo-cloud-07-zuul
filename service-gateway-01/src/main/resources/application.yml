@@ -1,33 +1,32 @@
 server:
-  port: 5100
+  port: 4100
 
 spring:
   application:
-    name: jadyer-api-gateway
+    name: jadyer-api-gateway       # 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
 
 zuul:
   # 设置忽略的服务，即配置后将不会被路由，实际测试发现没有生效，以后再回来看是不是还缺少什么配置
-  # ignored-services: xuanyu-prop
+  # ignored-services: CalculatorServer
   routes:
-    # 基于URL的映射
-    # 当我们访问http://127.0.0.1:5100/cal/add?a=11&b=22时，Zuul会路由该请求至http://127.0.0.1:2100/add?a=11&b=22
-    # api-cal-url是路由的名字，可以任意指定，只要在zuul上面唯一即可
-    api-cal-url:
-      path: /cal/**
+    api-cal-url:                  # 基于 URL 的映射（这里自定义路由的名字为 api-cal-url，它可任意指定，唯一即可）
+      path: /cal/**                # http://127.0.0.1:4100/cal/add?a=7&b=17会路由至http://127.0.0.1:2100/add?a=7&b=17
       url: http://127.0.0.1:2100/
-    # 基于ServiceId的映射
-    # 为了让Zuul能够发现服务，所以引入了eureka的配置
-    # http://127.0.0.1:5100/caladd/add?a=11&b=33会被路由到http://127.0.0.1:2100/add?a=11&b=33
-    api-add:
-      path: /caladd/**
-      serviceId: xuanyu-prop
-    # 如果这个值等于ServiceId，那么下面的serviceId属性就可以忽略
-    # http://127.0.0.1:5100/call/add?a=11&b=66会被路由到http://127.0.0.1:2100/add?a=11&b=66
-    # 基于ServiceId映射的好处是：它还支持负载均衡，而基于URL的方式是不支持的，实际测试也确实是这样
-    xuanyu-prop:
-      path: /call/**
+    api-add:                       # 基于 ServiceId 的映射（自定义路由的名字）
+      path: /caladd/**             # http://127.0.0.1:4100/caladd/add?a=6&b=16会路由至CalculatorServer服务的/add?a=6&b=16
+      serviceId: CalculatorServer
+    CalculatorServer:             # 基于 ServiceId 的映射（路由的名字等于 ServiceId 的情况下，serviceId 属性可以省略）
+      path: /mycall/**             # http://127.0.0.1:4100/mycall/add?a=5&b=15会路由至CalculatorServer服务的 /add?a=5&b=15
+      #serviceId: CalculatorServer
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true                     # 设置微服务调用地址为IP优先（缺省为false）
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 15  # 发呆时间，即服务续约到期时间（缺省为90s）
   client:
+    healthcheck:
+      enabled: true                               # 开启健康检查（依赖spring-boot-starter-actuator）
     serviceUrl:
-      defaultZone: http://127.0.0.1:1100/eureka/
+      defaultZone: http://127.0.0.1:1100/eureka/  # 指定服务注册中心的地址

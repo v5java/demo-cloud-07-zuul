@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
  * ---------------------------------------------------------------------
  * 这里实现了在请求被路由之前检查请求中是否有accessToken参数
  * 若有就进行路由，若没有就拒绝访问，返回401 Unauthorized错误
- * http://127.0.0.1:5100/caladd/add?a=11&b=33：返回401错误
- * http://127.0.0.1:5100/caladd/add?a=11&b=33&accessToken=token：返回正常
+ * http://127.0.0.1:4100/mycall/add?a=11&b=22：返回401错误
+ * http://127.0.0.1:4100/mycall/add?a=11&b=22&accessToken=token：返回正常
  * ---------------------------------------------------------------------
  * Created by 玄玉<https://jadyer.github.io/> on 2017/1/14 15:05.
  */

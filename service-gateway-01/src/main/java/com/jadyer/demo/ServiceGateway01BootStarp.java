@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 //注意不是@EnableZuulServer
 @EnableZuulProxy
-//注意这里用的是@SpringCloudApplication
+//注意这里使用了更加简化的@SpringCloudApplication
 @SpringCloudApplication
 public class ServiceGateway01BootStarp {
     /**
