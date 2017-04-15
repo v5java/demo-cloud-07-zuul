@@ -30,16 +30,16 @@ public class GatewayFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         log.info(String.format("收到 %s 请求 %s", request.getMethod(), request.getRequestURL().toString()));
-        Object accessToken = request.getParameter("accessToken");
+        Object accessToken = request.getParameter("accesstoken");
         if(accessToken == null) {
             ctx.getResponse().setContentType("text/html;charset=UTF-8");
-            log.warn("accessToken为空");
+            log.warn("accesstoken为空");
             ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);
+            ctx.setResponseStatusCode(200);
             ctx.setResponseBody("权限不足");
             return null;
         }
-        log.info("accessToken验证通过");
+        log.info("accesstoken验证通过");
         return null;
     }
 }
