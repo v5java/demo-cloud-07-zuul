@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 @RestController
 public class CalculatorController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Resource
     private DiscoveryClient client;
 
