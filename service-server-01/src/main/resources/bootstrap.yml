@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: xuanyu-prop # 指定配置文件{application}，对应配置中心的属性文件名
+  cloud:
+    config:
+      # uri: http://127.0.0.1:4100/
+      profile: prod # 指定profile，对应配置中心的配置文件中的{profile}
+      label: master # 指定Git仓库的分支，对应配置中心的配置文件的{label}
+      # 配置中心与注册中心整合时，注意下面两个配置
+      # 且注册中心URL要配置在本文件中，不能配置在application.yml
+      # 且spring.application.name属性，在两个文件中配置都可以，但只能配置一个，所以约定的配置中心文件名要与服务名相同
+      discovery:
+        enabled: true # 默认false，true表示使用注册中心中的configserver，而非自己配置的configserver
+        serviceId: xuanyu-config-server # 指定configserver在注册中心serviceId，默认为configserver
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/

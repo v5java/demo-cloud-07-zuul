@@ -1,0 +1,22 @@
+server:
+  port: 5200
+
+spring:
+  application:
+    name: jadyer-api-gateway
+
+zuul:
+  routes:
+    api-cal-url:
+      path: /cal/**
+      url: http://127.0.0.1:2100/
+    api-add:
+      path: /caladd/**
+      serviceId: xuanyu-prop
+    xuanyu-prop:
+      path: /call/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/

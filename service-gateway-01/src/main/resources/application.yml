@@ -1,0 +1,33 @@
+server:
+  port: 5100
+
+spring:
+  application:
+    name: jadyer-api-gateway
+
+zuul:
+  # 设置忽略的服务，即配置后将不会被路由，实际测试发现没有生效，以后再回来看是不是还缺少什么配置
+  # ignored-services: xuanyu-prop
+  routes:
+    # 基于URL的映射
+    # 当我们访问http://127.0.0.1:5100/cal/add?a=11&b=22时，Zuul会路由该请求至http://127.0.0.1:2100/add?a=11&b=22
+    # api-cal-url是路由的名字，可以任意指定，只要在zuul上面唯一即可
+    api-cal-url:
+      path: /cal/**
+      url: http://127.0.0.1:2100/
+    # 基于ServiceId的映射
+    # 为了让Zuul能够发现服务，所以引入了eureka的配置
+    # http://127.0.0.1:5100/caladd/add?a=11&b=33会被路由到http://127.0.0.1:2100/add?a=11&b=33
+    api-add:
+      path: /caladd/**
+      serviceId: xuanyu-prop
+    # 如果这个值等于ServiceId，那么下面的serviceId属性就可以忽略
+    # http://127.0.0.1:5100/call/add?a=11&b=66会被路由到http://127.0.0.1:2100/add?a=11&b=66
+    # 基于ServiceId映射的好处是：它还支持负载均衡，而基于URL的方式是不支持的，实际测试也确实是这样
+    xuanyu-prop:
+      path: /call/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1100/eureka/
