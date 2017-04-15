@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 interface CalculatorService {
     ////@PathVariable這種也是支持的
     //@RequestMapping(value="/mycall/add/{a}", method=RequestMethod.GET)
-    //int myadd(@PathVariable("a") int a, @RequestParam("b") int b);
+    //int myadd(@PathVariable("a") int a, @RequestParam("b") int b, @RequestParam("accesstoken") String accesstoken);
 
     //通过SpringMVC的注解来配置所綁定的服务下的具体实现
     @RequestMapping(value="/mycall/add", method=RequestMethod.GET)
