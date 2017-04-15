@@ -6,8 +6,7 @@ spring:
     name: jadyer-api-gateway       # 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
 
 zuul:
-  # 设置忽略的服务，即配置后将不会被路由，实际测试发现没有生效，以后再回来看是不是还缺少什么配置
-  # ignored-services: CalculatorServer
+  ignored-services: "*"          # 设置忽略的服务，即配置后将不会被路由（但对于明确配置在路由中的，将不会被忽略）
   routes:
     api-cal-url:                  # 基于 URL 的映射（这里自定义路由的名字为 api-cal-url，它可任意指定，唯一即可）
       path: /cal/**                # http://127.0.0.1:4100/cal/add?a=7&b=17会路由至http://127.0.0.1:2100/add?a=7&b=17

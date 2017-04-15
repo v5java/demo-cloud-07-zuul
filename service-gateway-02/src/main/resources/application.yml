@@ -6,6 +6,7 @@ spring:
     name: jadyer-api-gateway
 
 zuul:
+  ignored-services: "*"
   routes:
     api-cal-url:
       path: /cal/**
