@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
-//开启Feign功能
+//开启Feign功能（无需显式@EnableCircuitBreaker，其已含此功能）
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
